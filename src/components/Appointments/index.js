@@ -26,12 +26,12 @@ const STATUS = "STATUS"
 const CONFIRM = "CONFIRM"
 const DELETING = "DELETING"
 const SAVING = "SAVING"
-
+const EDIT = "EDIT"
 
 
 
 export default function Appointment (props) {
-  // console.log('APPOINTMENT PROPS----', props, 'PROPS ID', props.id)
+  console.log('APPOINTMENT PROPS----', props, 'PROPS ID', props.id)
 
   function save(name, interviewer) {
     const interview = {
@@ -59,6 +59,23 @@ export default function Appointment (props) {
     })
   }
 
+  // function editInterview (name, interviewer) {
+  //   const interview = {
+  //     student: name,
+  //     interviewer
+  //   };
+  //   transition(CREATE)
+  //   props.editInterview(props.id, interview)
+  //   .then(() => {
+  //     transition(SHOW)
+  //   })
+  // }
+
+  function editInterview () {
+    transition(EDIT)
+    // props.editInterview(props.id, interview)
+  }
+
 
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
@@ -72,6 +89,7 @@ export default function Appointment (props) {
     student={props.interview.student}
     interviewer={props.interviewers.filter( i => i.id === props.interview.interviewer)[0]}
     onDelete={deleteInterview}
+    onEdit={editInterview}
   />
 )}
 {mode === SAVING && (
@@ -96,7 +114,14 @@ export default function Appointment (props) {
     interviewers={props.interviewers}
     onCancel={() => back()}
     onSave={save}
-    bookInterview={props.bookInterview}
+    />
+  )}
+    {mode === EDIT && (
+    <Form
+    name={props.interview.student}  
+    interviewers={props.interviewers}
+    onCancel={() => back()}
+    onSave={save}
     />
   )}
   </article> )
