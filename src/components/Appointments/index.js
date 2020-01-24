@@ -18,6 +18,9 @@ import Confirm from "components/Appointments/Confirm"
 
 import { transformFileSync } from "@babel/core";
 
+import Error from "components/Appointments/Error"
+
+
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";
 const CREATE = "CREATE"
@@ -27,8 +30,8 @@ const CONFIRM = "CONFIRM"
 const DELETING = "DELETING"
 const SAVING = "SAVING"
 const EDIT = "EDIT"
-
-
+const ERROR_SAVING = "ERROR_SAVING"
+const ERROR_DELETING = "ERROR_DELETING"
 
 export default function Appointment (props) {
   console.log('APPOINTMENT PROPS----', props, 'PROPS ID', props.id)
@@ -43,6 +46,9 @@ export default function Appointment (props) {
     .then(() => {
       transition(SHOW)
     })
+    .catch(() => {
+      transition(ERROR_SAVING, true)
+    })
   }
 
   function deleteInterview () {
@@ -52,28 +58,18 @@ export default function Appointment (props) {
 
   function deleteDeleteInterview (student, interviewerId) {
     console.log('SECOND DELETE')
-    transition(DELETING)
+    transition(DELETING, true)
     props.cancelInterview(props.id)
     .then(() => {
       transition(EMPTY)
     })
+    .catch(() => {
+      transition(ERROR_DELETING, true)
+    })
   }
-
-  // function editInterview (name, interviewer) {
-  //   const interview = {
-  //     student: name,
-  //     interviewer
-  //   };
-  //   transition(CREATE)
-  //   props.editInterview(props.id, interview)
-  //   .then(() => {
-  //     transition(SHOW)
-  //   })
-  // }
 
   function editInterview () {
     transition(EDIT)
-    // props.editInterview(props.id, interview)
   }
 
 
@@ -124,6 +120,18 @@ export default function Appointment (props) {
     onSave={save}
     />
   )}
+  {mode === ERROR_DELETING && (
+  <Error 
+  message={'Error Deleting'}
+  onClose={() => back()}
+  />
+)}
+{mode === ERROR_SAVING && (
+  <Error 
+  message={'Error Saving'}
+  onClose={() => back()}
+  />
+)}
   </article> )
 }
 

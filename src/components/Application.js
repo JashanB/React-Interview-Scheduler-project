@@ -10,13 +10,6 @@ import Appointment from "components/Appointments/index";
 
 import {getAppointmentsForDay, getInterview, getInterviewersByDay} from "helpers/selectors";
 
-// import useVisualMode from "../hooks/useVisualMode";
-
-const EMPTY = "EMPTY";
-const SHOW = "SHOW";
-const CREATE = "CREATE"
-const BACK = "BACK"
-
 export default function Application(props) {
   // const[day, setDay] = useState('Monday');
   // const[days, setDays] = useState([])
@@ -36,40 +29,30 @@ export default function Application(props) {
       ...state.appointments[id],
       interview: { ...interview }
     };
-
-    const appointments = {
-      ...state.appointments,
-      [id]: appointment
-    };
-
-    setState({
-      ...state,
-      appointments
-    });  
-    return axios.put(`http://localhost:8001/api/appointments/${id}`, interview)
+    
+    return axios.put(`http://localhost:8001/api/appointments/${id}`, interview).then(() => {
+      setState(state => ({
+        ...state,
+        appointments: {
+          ...state.appointments,
+          [id]: appointment
+        }
+      }));
+      return true;
+    })
   }
 
   function cancelInterview(appointmentId) {
     return axios.delete(`http://localhost:8001/api/appointments/${appointmentId}`)
-  }
-
-  function editInterview(id, interview) {
-    const appointment = {
-      ...state.appointments[id],
-      interview: { ...interview }
-    };
-
-    const appointments = {
-      ...state.appointments,
-      [id]: appointment
-    };
-
-    setState({
-      ...state,
-      appointments
-    });  
-    console.log('EDIT', id, state.appointments[id])
-    return axios.put(`http://localhost:8001/api/appointments/${id}`, interview)
+    .then(() => {
+      setState(state => ({
+        ...state, 
+        appointments: {
+          ...state.appointments,
+          [appointmentId] : ''
+        }
+      }))
+    })
   }
 
   const setDay = day => setState({...state, day});
@@ -100,7 +83,6 @@ export default function Application(props) {
       interviewers={getInterviewersByDay(state, state.day)}
       bookInterview={bookInterview}
       cancelInterview={cancelInterview}
-      // editInterview={editInterview}
       {...appointment}
     />
   ) 
