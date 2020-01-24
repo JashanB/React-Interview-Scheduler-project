@@ -14,6 +14,8 @@ import Form from "components/Appointments/Form"
 
 import Status from "components/Appointments/Status"
 
+import Confirm from "components/Appointments/Confirm"
+
 import { transformFileSync } from "@babel/core";
 
 const EMPTY = "EMPTY";
@@ -21,26 +23,40 @@ const SHOW = "SHOW";
 const CREATE = "CREATE"
 const BACK = "BACK"
 const STATUS = "STATUS"
+const CONFIRM = "CONFIRM"
+const DELETING = "DELETING"
+const SAVING = "SAVING"
 
 
 
 
 export default function Appointment (props) {
+  // console.log('APPOINTMENT PROPS----', props, 'PROPS ID', props.id)
 
   function save(name, interviewer) {
     const interview = {
       student: name,
       interviewer
     };
-    transition(STATUS)
+    transition(SAVING)
     props.bookInterview(props.id, interview)
     .then(() => {
       transition(SHOW)
     })
   }
 
-  function deleteInterview (name, interviewer) {
-    
+  function deleteInterview () {
+    console.log('INITIAL DELETE')
+    transition(CONFIRM)
+  }
+
+  function deleteDeleteInterview (student, interviewerId) {
+    console.log('SECOND DELETE')
+    transition(DELETING)
+    props.cancelInterview(props.id)
+    .then(() => {
+      transition(EMPTY)
+    })
   }
 
 
@@ -55,11 +71,24 @@ export default function Appointment (props) {
     <Show
     student={props.interview.student}
     interviewer={props.interviewers.filter( i => i.id === props.interview.interviewer)[0]}
+    onDelete={deleteInterview}
   />
 )}
-{mode === STATUS && (
+{mode === SAVING && (
   <Status 
   message={'SAVING'}
+  />
+)}
+{mode === DELETING && (
+  <Status 
+  message={'DELETING'}
+  />
+)}
+{mode === CONFIRM && (
+  <Confirm 
+  onCancel={() => back()}
+  message={'DELETING'}
+  onConfirm={deleteDeleteInterview}
   />
 )}
   {mode === CREATE && (

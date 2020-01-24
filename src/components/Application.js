@@ -51,7 +51,8 @@ export default function Application(props) {
   }
 
   function cancelInterview(appointmentId) {
-    
+
+    return axios.delete(`http://localhost:8001/api/appointments/${appointmentId}`)
   }
 
   const setDay = day => setState({...state, day});
