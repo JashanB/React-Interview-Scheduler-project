@@ -45,13 +45,18 @@ export default function Application(props) {
   function cancelInterview(appointmentId) {
     return axios.delete(`http://localhost:8001/api/appointments/${appointmentId}`)
     .then(() => {
-      setState(state => ({
-        ...state, 
-        appointments: {
-          ...state.appointments,
-          [appointmentId] : ''
+      setState(state => { 
+        const appointment = state.appointments[appointmentId]
+        appointment.interview = null
+        return {
+          ...state, 
+          appointments: {
+            ...state.appointments,
+            [appointmentId] : appointment
+          }
         }
-      }))
+      })
+      
     })
   }
 
