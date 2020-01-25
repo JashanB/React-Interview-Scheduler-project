@@ -19,6 +19,7 @@ export function getAppointmentsForDay(state, day) {
 }
 
 export function getInterview(state, interview) {
+  console.log('getInterview: ', { state, interview });
   let object;
   if (interview) {
     object = {...interview, interviewer: state.interviewers[interview.interviewer]}
