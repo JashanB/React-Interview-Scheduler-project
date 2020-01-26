@@ -34,7 +34,7 @@ const ERROR_SAVING = "ERROR_SAVING"
 const ERROR_DELETING = "ERROR_DELETING"
 
 export default function Appointment (props) {
-  console.log('APPOINTMENT PROPS----', props, 'PROPS ID', props.id)
+  // console.log('APPOINTMENT PROPS----', props, 'PROPS ID', props.id)
 
   function save(name, interviewer) {
     const interview = {
@@ -52,12 +52,10 @@ export default function Appointment (props) {
   }
 
   function deleteInterview () {
-    console.log('INITIAL DELETE')
     transition(CONFIRM)
   }
 
   function deleteDeleteInterview (student, interviewerId) {
-    console.log('SECOND DELETE')
     transition(DELETING, true)
     props.cancelInterview(props.id)
     .then(() => {
