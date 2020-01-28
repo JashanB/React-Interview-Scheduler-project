@@ -34,7 +34,10 @@ const validate = function() {
         name={props.name}
         type="text"
         placeholder="Enter Student Name"
-        onChange={(event) => setName(event.target.value)}
+        onChange={(event) => {
+          setName(event.target.value)
+          setError('')}
+        }
         value={name}
         data-testid="student-name-input"
       />
@@ -44,7 +47,7 @@ const validate = function() {
   </section>
   <section className="appointment__card-right">
     <section className="appointment__actions">
-      <Button danger onClick={cancel}>Cancel</Button>
+      <Button danger onClick={() => cancel()}>Cancel</Button>
       <Button confirm onClick={() => validate()}>Save</Button>
     </section>
   </section>
