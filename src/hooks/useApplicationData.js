@@ -1,26 +1,14 @@
 import React, { useState, useEffect, useReducer } from "react"
 import axios from 'axios';
 
+import reducer, {
+  SET_DAY,
+  SET_APPLICATION_DATA,
+  SET_INTERVIEW,
+  SET_SPOTS
+} from "reducers/application";
+
 export default function useApplicationData() {
-  const SET_DAY = "SET_DAY";
-  const SET_APPLICATION_DATA = "SET_APPLICATION_DATA";
-  const SET_INTERVIEW = "SET_INTERVIEW";
-  const SET_SPOTS = "SET_SPOTS"
-
-  function reducer(state, action) {
-    if (action.type === SET_DAY) {
-      return { ...state, day: action.day }
-    } else if (action.type === SET_APPLICATION_DATA) {
-      return { ...state, days: action.days, appointments: action.appointments, interviewers: action.interviewers }
-    } else if (action.type === SET_INTERVIEW) {
-      return { ...state, appointments: action.interview }
-    } else if (action.type === SET_SPOTS) {
-      return { ...state, days: action.days }
-    } else {
-      return `Tried to reduce with unsupported action type: ${action.type}`
-    }
-  }
-
   const [state, dispatch] = useReducer(reducer, {
     day: "Monday",
     days: [],
@@ -56,7 +44,6 @@ export default function useApplicationData() {
     return result[0]
   }
 
-
   function bookInterview(id, interview) {
 
     const appointment = {
@@ -67,8 +54,8 @@ export default function useApplicationData() {
     return axios.put(`http://localhost:8001/api/appointments/${id}`, interview)
       .then(() => {
         const daySpots = findDays(state, id)
-        console.log('DAY SPOTS THING', daySpots)
-        if (daySpots.spots > 0) {
+      
+        if (daySpots.spots > 0 && state.appointments[id].interview === null) {
           const days = updateDays(state, id, -1)
           dispatch({ type: SET_SPOTS, days: days })
         }
@@ -82,6 +69,7 @@ export default function useApplicationData() {
     return axios.delete(`http://localhost:8001/api/appointments/${appointmentId}`)
       .then(() => {
         const daySpots = findDays(state, appointmentId)
+
         if (daySpots.spots < 5) {
           const days = updateDays(state, appointmentId, 1)
           dispatch({ type: SET_SPOTS, days: days })

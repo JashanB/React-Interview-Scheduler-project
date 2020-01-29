@@ -34,7 +34,6 @@ const ERROR_SAVING = "ERROR_SAVING"
 const ERROR_DELETING = "ERROR_DELETING"
 
 export default function Appointment (props) {
-  // console.log('APPOINTMENT PROPS----', props, 'PROPS ID', props.id)
 
   function save(name, interviewer) {
     const interview = {
@@ -75,7 +74,7 @@ export default function Appointment (props) {
     props.interview ? SHOW : EMPTY
   );
     return (
-  <article className="appointment">
+  <article className="appointment" data-testid="appointment-input">
     <Header time={props.time}/>
     {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
     {mode === SHOW && (
