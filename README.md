@@ -1,23 +1,7 @@
 # Interview Scheduler
 
-## Setup
+## Tools 
+Scheduler is a single page React app with axios for backend data fetching
 
-Install dependencies with `npm install`.
-
-## Running Webpack Development Server
-
-```sh
-npm start
-```
-
-## Running Jest Test Framework
-
-```sh
-npm test
-```
-
-## Running Storybook Visual Testbed
-
-```sh
-npm run storybook
-```
+## Testing
+Cypress and Jest testing 
