@@ -9,6 +9,7 @@ import reducer, {
 } from "reducers/application";
 
 export default function useApplicationData() {
+
   const [state, dispatch] = useReducer(reducer, {
     day: "Monday",
     days: [],
@@ -27,6 +28,7 @@ export default function useApplicationData() {
       })
   }, [])
 
+  //function to update number of spots 
   function updateDays(state, appointmentId, increment) {
     return state.days.map((day) => {
       if (day.appointments.includes(appointmentId)) {
@@ -36,7 +38,7 @@ export default function useApplicationData() {
       }
     })
   }
-
+  //function to find days with appointment Id 
   function findDays(state, appointmentId) {
     const result = state.days.filter(function (day) {
       return day.appointments.includes(appointmentId)
@@ -50,11 +52,10 @@ export default function useApplicationData() {
       ...state.appointments[id],
       interview: { ...interview }
     };
-
     return axios.put(`http://localhost:8001/api/appointments/${id}`, interview)
       .then(() => {
+        //update day spots
         const daySpots = findDays(state, id)
-      
         if (daySpots.spots > 0 && state.appointments[id].interview === null) {
           const days = updateDays(state, id, -1)
           dispatch({ type: SET_SPOTS, days: days })
@@ -68,8 +69,8 @@ export default function useApplicationData() {
   function cancelInterview(appointmentId) {
     return axios.delete(`http://localhost:8001/api/appointments/${appointmentId}`)
       .then(() => {
+        //update day spots
         const daySpots = findDays(state, appointmentId)
-
         if (daySpots.spots < 5) {
           const days = updateDays(state, appointmentId, 1)
           dispatch({ type: SET_SPOTS, days: days })

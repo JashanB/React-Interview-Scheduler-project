@@ -24,8 +24,13 @@ const validate = function() {
     setError('Student name cannot be blank')
     return
   }
+  if (interviewer === null) {
+    setError('Interviewer cannot be blank')
+    return
+  }
   props.onSave(name, interviewer)
 }
+
   return (<main className="appointment__card appointment__card--create">
   <section className="appointment__card-left">
     <form autoComplete="off" onSubmit={event => event.preventDefault()}>

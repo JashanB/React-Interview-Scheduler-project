@@ -1,23 +1,13 @@
 import React from "react";
-
 import "components/Appointments/styles.scss";
-
 import Header from "components/Appointments/Header"
-
 import Show from "components/Appointments/Show"
-
 import Empty from "components/Appointments/Empty"
-
 import useVisualMode from "hooks/useVisualMode"
-
 import Form from "components/Appointments/Form"
-
 import Status from "components/Appointments/Status"
-
 import Confirm from "components/Appointments/Confirm"
-
 import { transformFileSync } from "@babel/core";
-
 import Error from "components/Appointments/Error"
 
 
@@ -49,11 +39,11 @@ export default function Appointment (props) {
       transition(ERROR_SAVING, true)
     })
   }
-
+  //transistions to confirm 
   function deleteInterview () {
     transition(CONFIRM)
   }
-
+  //actually delete and transistion to empty 
   function deleteDeleteInterview (student, interviewerId) {
     transition(DELETING, true)
     props.cancelInterview(props.id)
@@ -73,6 +63,7 @@ export default function Appointment (props) {
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
   );
+  
     return (
   <article className="appointment" data-testid="appointment-input">
     <Header time={props.time}/>
