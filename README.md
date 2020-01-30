@@ -8,13 +8,13 @@ Cypress and Jest testing
 
 ## Screenshots
 
-! [Main page with appointment on hover options] 
+![Main page with appointment on hover options] 
 (https://github.com/JashanB/React-Interview-Scheduler-project/blob/master/docs/Hover%20appointment.png?raw=true)
 
-! [Edit form with input requirements]
+![Edit form with input requirements]
 (https://github.com/JashanB/React-Interview-Scheduler-project/blob/master/docs/Create%20appointment.png?raw=true)
 
-![Deleting appointments]
+!Deleting appointments]
 https://github.com/JashanB/React-Interview-Scheduler-project/blob/master/docs/Delete%20appointment.png?raw=true
 
 ![Post deleting appointments showing spots decreasing]
