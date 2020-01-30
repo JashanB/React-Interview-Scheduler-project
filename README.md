@@ -8,7 +8,7 @@ Cypress and Jest testing
 
 ## Screenshots
 
-![Main page with appointment on hover options] 
+!["Main page with appointment on hover options"] 
 (https://github.com/JashanB/React-Interview-Scheduler-project/blob/master/docs/Hover%20appointment.png?raw=true)
 
 ![Edit form with input requirements]
