@@ -19,13 +19,13 @@ export function getAppointmentsForDay(state, day) {
 }
 
 export function getInterview(state, interview) {
-  let object;
+  let interviewObject;
   if (interview) {
-    object = {...interview, interviewer: state.interviewers[interview.interviewer]}
+    interviewObject = {...interview, interviewer: state.interviewers[interview.interviewer]}
   } else {
-    object = null;
+    interviewObject = null;
   }
-  return object;
+  return interviewObject;
 }
 
 export function getInterviewersByDay(state, day) {

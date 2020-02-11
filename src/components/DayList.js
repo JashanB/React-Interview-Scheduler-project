@@ -1,5 +1,4 @@
 import React from "react";
-
 import "components/DayListItem";
 import DayListItem from "components/DayListItem";
 

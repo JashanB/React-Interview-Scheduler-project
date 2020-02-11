@@ -7,15 +7,12 @@ import useVisualMode from "hooks/useVisualMode"
 import Form from "components/Appointments/Form"
 import Status from "components/Appointments/Status"
 import Confirm from "components/Appointments/Confirm"
-import { transformFileSync } from "@babel/core";
 import Error from "components/Appointments/Error"
 
 
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";
 const CREATE = "CREATE"
-const BACK = "BACK"
-const STATUS = "STATUS"
 const CONFIRM = "CONFIRM"
 const DELETING = "DELETING"
 const SAVING = "SAVING"
@@ -88,7 +85,7 @@ export default function Appointment (props) {
 )}
 {mode === CONFIRM && (
   <Confirm 
-  onCancel={() => back()}
+  onCancel={back}
   message={'DELETING'}
   onConfirm={deleteDeleteInterview}
   />
@@ -96,7 +93,7 @@ export default function Appointment (props) {
   {mode === CREATE && (
     <Form  
     interviewers={props.interviewers}
-    onCancel={() => back()}
+    onCancel={back}
     onSave={save}
     />
   )}
@@ -104,20 +101,20 @@ export default function Appointment (props) {
     <Form
     name={props.interview.student}  
     interviewers={props.interviewers}
-    onCancel={() => back()}
+    onCancel={back}
     onSave={save}
     />
   )}
   {mode === ERROR_DELETING && (
   <Error 
   message={'Error Deleting'}
-  onClose={() => back()}
+  onClose={back}
   />
 )}
 {mode === ERROR_SAVING && (
   <Error 
   message={'Error Saving'}
-  onClose={() => back()}
+  onClose={back}
   />
 )}
   </article> )

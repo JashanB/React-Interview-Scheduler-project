@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import { useState } from "react"
 
 export default function useVisualMode(initial) {
   const [state, setState] = useState({mode: initial, previous: []});
@@ -6,7 +6,6 @@ export default function useVisualMode(initial) {
   const transition = function (newMode, replace) {
     setState({mode: newMode, previous: [...state.previous, ...[state.mode]]})
     if (replace) {
-      console.log(state.previous)
       setState({mode: newMode, previous: state.previous})
     }
   }
