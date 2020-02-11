@@ -52,7 +52,7 @@ export default function useApplicationData() {
       ...state.appointments[id],
       interview: { ...interview }
     };
-    return axios.put(`http://localhost:8001/api/appointments/${id}`, interview)
+    return axios.put(`http://localhost:8001/api/appointments/${id}`, appointment)
       .then(() => {
         //update day spots
         const daySpots = findDays(state, id)
