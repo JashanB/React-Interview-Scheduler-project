@@ -13,6 +13,6 @@ export const SET_DAY = "SET_DAY";
     } else if (action.type === SET_SPOTS) {
       return { ...state, days: action.days }
     } else {
-      return `Tried to reduce with unsupported action type: ${action.type}`
+      throw new Error(`Tried to reduce with unsupported action type: ${action.type}`)
     }
   }
